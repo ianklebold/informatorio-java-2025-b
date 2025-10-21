@@ -1,15 +1,15 @@
 package paradigmas.poo.desafio.dominio;
 
-public class JuegoRPG {
-    private Jugador jugador;
+public class JuegoRPG extends AbstractJuego{
 
     public JuegoRPG(Jugador jugador) {
-        this.jugador = jugador;
+        super(jugador);
     }
 
+    @Override
     public void evaluar(){
-        int total = jugador.calcularTotal();
-        Mision mejor = jugador.misionConMayorPuntaje();
+        int total = super.getJugador().calcularTotal();
+        Mision mejor = super.getJugador().misionConMayorPuntaje();
 
         String mensajeChad = ( total > 300 ) ? "¡Felicidades! Sos un verdadero Chad del RPG ": "Te falta entrenamiento, joven aprendiz...";
         System.out.println(mensajeChad);
@@ -19,11 +19,11 @@ public class JuegoRPG {
             " con " + mejor.getPuntaje() + " puntos."
         );
 
-        if(jugador.tieneMisionFallida()){
+        if(super.getJugador().tieneMisionFallida()){
             System.out.println("Fallaste al menos una mision. Que el backend te tenga piedad...");
         }
 
-        if(jugador.esConstante()){
+        if(super.getJugador().esConstante()){
             System.out.println("¡Ejecución constante! Sos el sueño de un arquitecto de software.");
         }
 

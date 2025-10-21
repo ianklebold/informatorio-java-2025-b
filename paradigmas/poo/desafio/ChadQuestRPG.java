@@ -1,4 +1,6 @@
-package paradigmas.poo.desafio.dominio;
+package paradigmas.poo.desafio;
+
+import paradigmas.poo.desafio.dominio.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class ChadQuestRPG {
         misiones.add(new Mision(5,500));
 
         Jugador jugador = new Jugador(misiones);
-        JuegoRPG juego = new JuegoRPG(jugador);
+        AbstractJuego juego = new JuegoRPGV2(jugador);
         juego.evaluar();
     }
 }
