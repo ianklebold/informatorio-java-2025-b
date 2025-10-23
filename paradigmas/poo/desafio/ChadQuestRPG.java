@@ -1,23 +1,29 @@
 package paradigmas.poo.desafio;
 
 import paradigmas.poo.desafio.dominio.*;
+import paradigmas.poo.desafio.service.juegorpg.JuegoRPGService;
+import paradigmas.poo.desafio.service.juegorpg.impl.JuegoRPGServiceImpl;
+import paradigmas.poo.desafio.service.lector.LectorMisionesService;
+import paradigmas.poo.desafio.service.lector.impl.LectorMisionesServiceImpl;
+import paradigmas.poo.desafio.utils.ImpresoraUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChadQuestRPG {
     public static void main(String[] args) {
-        System.out.println(" Bienvenido a ChadQuest RPG - Carga los puntajes de tus misiones ");
-        List<Mision> misiones = new ArrayList<Mision>();
+        JuegoRPGService juegoRPGService = new JuegoRPGServiceImpl();
+        LectorMisionesService lectorMisionesService = new LectorMisionesServiceImpl();
 
-        misiones.add(new Mision(1,100));
-        misiones.add(new Mision(2,200));
-        misiones.add(new Mision(3,300));
-        misiones.add(new Mision(4,400));
-        misiones.add(new Mision(5,500));
+        System.out.println(" Bienvenido a ChadQuest RPG - Carga los puntajes de tus misiones ");
+        List<Mision> misiones = lectorMisionesService.leerMisiones( 5 );
 
         Jugador jugador = new Jugador(misiones);
-        AbstractJuego juego = new JuegoRPGV2(jugador);
-        juego.evaluar();
+
+        String mensajeTieneFallos = juegoRPGService.tieneFallos(jugador);
+        String mensajeConstancia =  juegoRPGService.mensajeDeConstancia(jugador);
+        String mensajeEvaluacion =  juegoRPGService.evaluar(jugador);
+
+        ImpresoraUtils.imprimirEvaluacion( List.of( mensajeTieneFallos, mensajeConstancia, mensajeEvaluacion ) );
+
     }
 }

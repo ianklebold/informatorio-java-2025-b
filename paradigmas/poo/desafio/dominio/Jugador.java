@@ -49,7 +49,7 @@ public class Jugador {
         return false;
     }
 
-    public Mision misionConMenorPuntaje(){
+    private Mision misionConMenorPuntaje(){
         if (misiones.isEmpty()) {
             return null;
         }
