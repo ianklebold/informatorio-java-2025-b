@@ -2,18 +2,23 @@ package com.informatorio.chadgame.service.lector.impl;
 
 
 import com.informatorio.chadgame.dominio.Mision;
+import com.informatorio.chadgame.repository.misiones.MisionRepository;
 import com.informatorio.chadgame.service.lector.LectorMisionesService;
 import com.informatorio.chadgame.utils.LectorUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class LectorMisionesServiceImpl implements LectorMisionesService {
+
+    private MisionRepository misionRepository;
+
+    public LectorMisionesServiceImpl(MisionRepository misionRepository) {
+        this.misionRepository = misionRepository;
+    }
+
     @Override
-    public List<Mision> leerMisiones(int cantidadDeMisiones) {
-        Scanner scanner = new Scanner(System.in);
-        List<Mision> listaMisiones = new ArrayList<Mision>();
+    public void leerMisiones(int cantidadDeMisiones, Scanner scanner) {
 
         for (int i = 0; i < cantidadDeMisiones; i++) {
             int numeroMision = i + 1;
@@ -21,11 +26,9 @@ public class LectorMisionesServiceImpl implements LectorMisionesService {
             System.out.println("Ingrese los puntos obtenidos de la mision N " + numeroMision + ": ");
 
             int puntosObtenidos = LectorUtils.leerEnteroPositivo(scanner);
-            listaMisiones.add( new Mision( numeroMision , puntosObtenidos ) );
+
+            this.misionRepository.guardar( numeroMision , puntosObtenidos );
 
         }
-
-        scanner.close();
-        return listaMisiones;
     }
 }

@@ -23,7 +23,7 @@ public class JuegoRPGServiceImpl implements JuegoRPGService {
         if(jugador.esConstante()){
             return "¡Ejecución constante! Sos el sueño de un arquitecto de software.";
         }
-        return "";
+        return "No hubo constancia";
 
 
     }
@@ -31,8 +31,8 @@ public class JuegoRPGServiceImpl implements JuegoRPGService {
     @Override
     public String tieneFallos(Jugador jugador) {
         if(jugador.tieneMisionFallida()){
-            System.out.println("Fallaste al menos una mision. Que el backend te tenga piedad...");
+            return "Fallaste al menos una mision. Que el backend te tenga piedad...";
         }
-        return "";
+        return "Felicitaciones no hubo misiones fallidas";
     }
 }
