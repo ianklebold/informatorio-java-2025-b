@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,10 +26,14 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping
-    public List<UsuarioDto> getUsuarios() {
+    @GetMapping()
+    public List<UsuarioDto> getUsuarios(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String colorFavorito
+    ) {
 
-        List<UsuarioDto> usuarios = usuarioService.obtenerTodos();
+        List<UsuarioDto> usuarios = usuarioService.obtenerTodos(nombre, email, colorFavorito);
         return usuarios;
     }
 
@@ -50,7 +55,9 @@ public class UsuarioController {
             @Valid @RequestBody UsuarioCreateDto usuarioCreateDto
             ){
         UsuarioDto usuarioCreado = usuarioService.crearUsuario(usuarioCreateDto);
-        return ResponseEntity.ok( usuarioCreado );
+        return ResponseEntity
+                .created( URI.create( "/api/v1/usuarios/" + usuarioCreado.getId() ) )
+                .body( usuarioCreado ) ;
     }
 
     @PutMapping("/{id}")
